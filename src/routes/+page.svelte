@@ -3,6 +3,12 @@
 	import type { ActionData } from './$types';
 
 	export let form: ActionData;
+	$: {
+		title: form?.data?.title;
+		body: form?.data?.body;
+		video: form?.data?.video;
+		image: form?.data?.image;
+	}
 
 	let uploading = false;
 
@@ -17,12 +23,23 @@
 
 <main>
 	<form method="POST" enctype="multipart/form-data" use:enhance={handleUpload}>
-		<input type="file" id="file" name="fileToUpload" accept=".jpg, .jpeg, .png, .webp" />
+		Title
+		<input type="text" name="title">
+		Description
+		<textarea name="body"></textarea>
+		Video
+		<input type="file" name="video" accept="video/*">
+		Image
+		<input type="file" id="file" name="image" accept=".jpg, .jpeg, .png, .webp" />
 		<button disabled={uploading} type="submit">
 			{uploading ? 'Uploading...' : 'Upload'}
 		</button>
 	</form>
 	{#if form && form.status === 200}
-		<img src={form.url} alt={form.filename} />
+		<img src={image} alt={form.filename} />
 	{/if}
 </main>
+
+<style>
+	
+</style>
