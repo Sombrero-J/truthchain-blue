@@ -10,7 +10,7 @@ const pool = new Pool({
 
 const client = await pool.connect();
 
-export async function query(text: string, params: string[]) {
+export async function query(text, params) {
 	const res = await client.query(text, params);
 	return res;
 }
