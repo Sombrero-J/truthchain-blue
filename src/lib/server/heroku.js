@@ -1,14 +1,16 @@
 import pg from 'pg';
-import express from 'express';
+// import express from 'express';
+
+	// "start": "node src/lib/server/heroku.js"
 
 const { Pool } = pg;
-const app = express();
+// const app = express();
 
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+// 	console.log(`Server is running on port ${PORT}`);
+// });
 
 const pool = new Pool({
 	connectionString: process.env.DATABASE_URL,
