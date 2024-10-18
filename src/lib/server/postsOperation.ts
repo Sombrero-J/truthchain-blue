@@ -69,7 +69,7 @@ export const getAllPosts = async () => {
 
 export const getUserPosts = async (wallet_address: string) => {
 	const queryText = `
-        SELECT ipfs_hash, created_at, validated FROM posts
+        SELECT id, ipfs_hash, created_at, validated FROM posts
 		WHERE wallet_addr = $1
 		ORDER BY created_at DESC
     `;

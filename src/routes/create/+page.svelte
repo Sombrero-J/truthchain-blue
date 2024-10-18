@@ -3,9 +3,7 @@
 	import type { ActionData } from './$types';
 	import { addressStore } from '$lib/stores/wallet';
 	import ConnectWallet from '$lib/component/connectWallet.svelte';
-	import type { PageData } from '../$types';
 
-	export let data: PageData;
 	export let form: ActionData;
 
 	let uploading = false;
@@ -47,16 +45,7 @@
 		</form>
 	</main>
 
-	{#if data.post.length === 0}
-		<p>Your homepage is empty, post something.</p>
-	{:else}
-		{#each data.post as post (post.id)}
-			<article>
-				<p>Stake: {post.stake}</p>
-				<p>Address: {post.wallet_addr}</p>
-			</article>
-		{/each}
-	{/if}
+	
 {:else}
 	<p>Wallet not connected. You need to connect before posting</p>
 	<ConnectWallet />

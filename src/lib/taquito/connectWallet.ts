@@ -75,7 +75,6 @@ export const detectAccount = async (): Promise<AccountInfo | null> => {
 	const activeAccount = await wallet.client.getActiveAccount();
 	console.log("account found," , activeAccount);
 	if (activeAccount) {
-		// User already has account connected, everything is ready
 		addressStore.set(activeAccount.address);
 		await getWalletBalance(activeAccount.address);
 		if (!(await checkUserEntry(activeAccount.address))) {

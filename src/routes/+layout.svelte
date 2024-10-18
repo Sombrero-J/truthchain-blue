@@ -3,8 +3,12 @@
 	import { balanceStore, addressStore } from '$lib/stores/wallet';
 
 	import { onMount } from 'svelte';
-	onMount(async () => {
+	let address: string;
+	addressStore.subscribe((value) => {
+		address = value;
+	});
 
+	onMount(async () => {
 		const { detectAccount } = await import('$lib/taquito/connectWallet');
 
 		detectAccount();
@@ -16,6 +20,7 @@
 {:else}
 	{$addressStore}
 	{$balanceStore}
-    <a href="/profile">Profile</a>
+	<a href={`/profile?address=` + address}>Profile</a>
+	<a href={'/create'}>Create Post</a>
 {/if}
 <slot></slot>

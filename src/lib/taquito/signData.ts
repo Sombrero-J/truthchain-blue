@@ -1,6 +1,12 @@
 import { stringToBytes } from '@taquito/utils';
 import { walletStore, addressStore } from '$lib/stores/wallet';
 import { type RequestSignPayloadInput, SigningType } from '@airgap/beacon-sdk';
+// import('@airgap/beacon-sdk').then((module) => {
+// 	const { SigningType } = module;
+//     type RequestSignPayloadInput = typeof module.RequestSignPayloadInput;
+//   }).catch((error) => {
+// 	console.error('Failed to load module:', error);
+//   });
 import type { BeaconWallet as BWT } from '@taquito/beacon-wallet';
 import { get } from 'svelte/store';
 

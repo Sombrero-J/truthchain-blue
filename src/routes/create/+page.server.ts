@@ -1,5 +1,6 @@
 import { fail, type Actions } from '@sveltejs/kit';
 import { uploadFile, uploadJson, uploadUrl } from '$lib/server/pinata';
+import { insertPost } from '$lib/server/postsOperation';
 
 export const actions: Actions = {
 	default: async ({ request }) => {

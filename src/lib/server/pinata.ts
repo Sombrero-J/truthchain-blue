@@ -57,12 +57,17 @@ export const getPostContent = async (hash: string) => {
 	try {
 		const content = await getFromHash(hash);
 		const { title, body, image, video } = content.data;
-		const imageUrl = image ? await getFromHash(image) : null;
 
-		const vid = video ? await convertIpfs(video) : null;
-		console.log('vid:', vid);
-		
-		const videoUrl = video ? await getFromHash(video) : null;
+		let imageUrl;
+		let videoUrl;
+
+		if (image) {
+			imageUrl = image ? await convertIpfs(image) : null;
+		}
+
+		if (video) {
+			videoUrl = video ? await convertIpfs(video) : null;
+		}
 		return { title, body, imageUrl, videoUrl };
 	} catch (error) {
 		console.error('Error getting post content:', error);
