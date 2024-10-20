@@ -1,0 +1,84 @@
+#import "./Contract.jsligo" "Contract"
+
+const test_post_validation = () : unit => {
+    
+    let test_post: Contract.Post.post = {
+        user_addr: "tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx" as address,
+        cid: "QmYourTestCID",
+        label: false
+    };
+    
+    let [_ops, updated_post] = Contract.Post.post_validation(true, test_post);
+    Assert.Error.assert(
+        updated_post.label == true,"Label should be updated to true");
+
+    let [_ops2, updated_post2] = Contract.Post.post_validation(false, test_post);
+    Assert.Error.assert(updated_post2.label == false,"Label should not be updated");
+}; 
+
+const test_transfer_toCompany = () : unit => {
+    
+    let test_post: Contract.Post.post = {
+        user_addr: "tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx" as address,
+        cid: "QmYourTestCID",
+        label: false
+    };
+    // Test.Next.Address.to_typed_address
+    Test.Next.IO.log(Test.Next.Address.get_balance("tz2GAUtthZfvCv6dRCwsxpB4pt1grWuXXZST" as address));
+    const orig = Test.Next.Originate.contract(contract_of(Contract.Post), test_post, 1000 as tez);
+    Test.Next.Contract.transfer_exn(Test.Next.Typed_address.get_entrypoint("transfer_toCompany", orig.taddr), unit, 0tez);
+    Assert.assert(Test.Next.Address.get_balance(Test.Next.Typed_address.to_address(orig.taddr)) == (500 as tez));
+    Test.Next.IO.log(Test.Next.Address.get_balance("tz2GAUtthZfvCv6dRCwsxpB4pt1grWuXXZST" as address));
+    Assert.assert( Test.Next.get_storage(orig.taddr) == test_post);
+    
+};
+
+const test_stakeToDownvoter = () : unit => {
+    
+    let test_post: Contract.Post.post = {
+        user_addr: "tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx" as address,
+        cid: "QmYourTestCID",
+        label: false
+    };
+
+    let _params: Contract.Post.invalid_stake_params = {
+        voters: [Test.Next.Account.address(0n) as address,Test.Next.Account.address(1n) as address] as list<address>,
+        total_voter: 2 as nat
+    };
+
+    const orig = Test.Next.Originate.contract(contract_of(Contract.Post), test_post, 1000 as tez);
+    Test.Next.IO.log(Test.Next.Address.get_balance(Test.Next.Account.address(0n))); 
+    Test.Next.IO.log(Test.Next.Address.get_balance(Test.Next.Account.address(1n))); 
+    Test.Next.Contract.transfer_exn(Test.Next.Typed_address.get_entrypoint("stakeTodownvoter", orig.taddr), _params, 0tez);
+    Assert.assert(Test.Next.Address.get_balance(Test.Next.Typed_address.to_address(orig.taddr)) == (900 as tez));
+    Test.Next.IO.log(Test.Next.Address.get_balance(Test.Next.Account.address(0n)));
+    Test.Next.IO.log(Test.Next.Address.get_balance(Test.Next.Account.address(1n))); 
+    Assert.assert(Test.Next.get_storage(orig.taddr) == test_post);
+};
+
+const test_stakeToDisapproval = () : unit => {
+    
+    let test_post: Contract.Post.post = {
+        user_addr: "tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx" as address,
+        cid: "QmYourTestCID",
+        label: false
+    };
+
+    let _params: list<address> = [Test.Next.Account.address(0n) as address,Test.Next.Account.address(1n) as address,Test.Next.Account.address(1n) as address];
+
+    const orig = Test.Next.Originate.contract(contract_of(Contract.Post), test_post, 1000 as tez);
+    Test.Next.IO.log(Test.Next.Address.get_balance(Test.Next.Account.address(0n))); 
+    Test.Next.IO.log(Test.Next.Address.get_balance(Test.Next.Account.address(1n))); 
+    Test.Next.Contract.transfer_exn(Test.Next.Typed_address.get_entrypoint("stakeToDisapproval", orig.taddr), _params, 0tez);
+    // Assert.assert(Test.Next.Address.get_balance(Test.Next.Typed_address.to_address(orig.taddr)) == (601 as tez));   
+    Test.Next.IO.log(Test.Next.Address.get_balance(Test.Next.Typed_address.to_address(orig.taddr)));
+    Test.Next.IO.log(Test.Next.Address.get_balance(Test.Next.Account.address(0n)));
+    Test.Next.IO.log(Test.Next.Address.get_balance(Test.Next.Account.address(1n))); 
+    Assert.assert(Test.Next.get_storage(orig.taddr) == test_post);
+}
+// Run all tests
+
+const test1=test_post_validation();
+const test2=test_transfer_toCompany();
+const test3=test_stakeToDownvoter();
+const test4=test_stakeToDisapproval();

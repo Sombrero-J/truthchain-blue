@@ -1,0 +1,66 @@
+export namespace Post{
+export type post = {
+    user_addr: address,     //author wallet address
+    cid: string,            //identification for each post
+    label: bool             //content label: true or false(valid or invalid)
+};
+
+type _return = [list<operation>, post];
+
+export type invalid_stake_params = {
+    voters: list<address>, // address of all downvoters
+    total_voter: nat       // total counts of downvoters
+};
+
+
+// function to update label
+@entry
+const post_validation=(result: bool, post:post) : _return=>{
+    const updated_post:post = {...post,label:result};
+    return [[],updated_post] 
+};
+
+
+// function to transfer 50% post_stake to truthchain if post is being unvalidated
+@entry
+const transfer_toCompany  = (_param: unit, post: post): _return => {
+  const contract_balance: tez = Tezos.Next.get_balance()/2n;
+  const company:address="tz2GAUtthZfvCv6dRCwsxpB4pt1grWuXXZST" as address;
+  const transfer_op: operation =Tezos.Next.Operation.transaction(unit,
+  contract_balance,
+  Tezos.Next.get_contract(company) );           
+  return [[transfer_op],post]
+  };
+
+
+// function to transfer 40% post stake to top three crooker
+@entry
+const stakeToDisapproval=(_params:list<address>,post:post):_return =>{
+    const total_amount:tez=Tezos.Next.get_balance()*2n/5n;  //40% of total post stake
+    const amount:tez=total_amount/3n;                       //divides the 40% stake into 3 
+    const transfer_op=(user:address):operation=>{
+        return Tezos.Next.Operation.transaction(unit,
+        amount,                                             // distribute the amount equally to top 3 crooker
+        Tezos.Next.get_contract(user) )
+        }; 
+    const operations : list<operation> = List.map(transfer_op,_params);           
+    return [operations,post]
+
+};
+
+
+//  function to transfer 10% post stake to all downvoters
+@entry
+const stakeTodownvoter =(_params:invalid_stake_params,post:post): _return =>{
+    const downvoter:tez=(Tezos.Next.get_balance()/10n);         //10% of tatal post stake
+    const money_perVoter:tez=(downvoter/_params.total_voter);   //divides the 10% post stake by total downvoters
+    const transfer_op=(voter:address):operation=>{
+        return Tezos.Next.Operation.transaction(unit,
+        money_perVoter,                                         // distribute the tez coin to each downvoter
+        Tezos.Next.get_contract(voter) )
+        }; 
+    const operations : list<operation> = List.map(transfer_op,_params.voters);           
+    return [operations,post]
+}
+
+};

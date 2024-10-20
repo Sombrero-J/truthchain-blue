@@ -1,0 +1,88 @@
+#import "/TruthChain(User).jsligo" "User"
+
+const test_add_truth_stake = () : unit => {
+    let test_user : User.User.user = {
+        userAddress:"tz1WWDHsv3EGaxxGUNFUsuNmKYcy2gFE6N9b" as address,
+        credibility: 50,
+        votingweightage: 1,
+        truth_stake: 0tez
+    };
+
+    let [_ops, updated_user] = User.User.add_truth_stake(100 as tez, test_user);
+    
+    assert(updated_user.truth_stake== 100tez);
+    Test.Next.IO.log("success");
+};
+
+
+const test_voting_weightage_low = () : unit => {
+    let test_user : User.User.user = {
+        userAddress: "tz1WWDHsv3EGaxxGUNFUsuNmKYcy2gFE6N9b" as address,
+        credibility: 30 as int,
+        votingweightage: 1 as int,
+        truth_stake: 0 as tez
+    };
+
+    let [_ops, updated_user] = User.User.votingweightage(unit, test_user);
+    assert(updated_user.votingweightage == 3/10 ); // 30 / 10
+    
+};
+
+const test_voting_weightage_medium = () : unit => {
+    let test_user : User.User.user = {
+        userAddress: "tz1WWDHsv3EGaxxGUNFUsuNmKYcy2gFE6N9b" as address,
+        credibility: 70 as int,
+        votingweightage: 1 as int,
+        truth_stake: 0tez
+    };
+
+    let [_ops, updated_user] = User.User.votingweightage(unit, test_user);
+    assert(updated_user.votingweightage == 1);
+};
+
+const test_voting_weightage_high = () : unit => {
+    let test_user : User.User.user = {
+        userAddress: "tz1WWDHsv3EGaxxGUNFUsuNmKYcy2gFE6N9b" as address,
+        credibility: 98 as int,
+        votingweightage: 1 as int,
+        truth_stake: 0 as tez
+    }
+
+    let [_ops, updated_user] = User.User.votingweightage((unit), test_user);
+    assert(updated_user.votingweightage == (13 / 10));
+};
+
+const test_truth_stake_return_high_credibility = () : unit => {
+    let test_user : User.User.user = {
+        userAddress: "tz1WWDHsv3EGaxxGUNFUsuNmKYcy2gFE6N9b" as address,
+        credibility: 96 as int,
+        votingweightage: 1 as int,
+        truth_stake: 1000 as tez
+    };
+
+    let [_ops, updated_user] = User.User.truth_stake_return(unit, test_user);
+
+    // Calculate expected daily return
+    let daily_interest = (7n / 100n / 365n) as nat;
+    let expected_return = (1000tez) * daily_interest;
+    assert(updated_user.truth_stake == test_user.truth_stake + expected_return);
+};
+
+const test_truth_stake_return_low_credibility = () : unit => {
+    let test_user : User.User.user = {
+        userAddress: "tz1WWDHsv3EGaxxGUNFUsuNmKYcy2gFE6N9b" as address,
+        credibility: 90 as int,
+        votingweightage: 1 as int,
+        truth_stake: 1000 as tez
+    };
+
+    let [_ops, updated_user] = User.User.truth_stake_return(unit, test_user);
+    assert(updated_user.truth_stake == test_user.truth_stake);
+};
+
+// const test1 = test_add_truth_stake();
+// const test2 =test_voting_weightage_low();
+// const test3= test_voting_weightage_medium();
+// const test4= test_voting_weightage_high();
+// const test5= test_truth_stake_return_high_credibility();
+// const test6= test_truth_stake_return_low_credibility();
