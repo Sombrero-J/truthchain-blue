@@ -36,6 +36,23 @@ export const insertPost = async (ipfs_hash: string, wallet_address: string, stak
 	}
 };
 
+export const insertContractAddr = async (post_id: string, contract_addr: string) => {
+	const queryText = `
+		UPDATE posts
+		SET contract_addr = $2
+		WHERE id = $1
+		RETURNING *;
+	`;
+
+	try {
+		const result = await query(queryText, [post_id, contract_addr]);
+		return result.rows[0];
+	} catch (error) {
+		console.error('Error inserting contract address:', error);
+		throw new Error('Unable to insert contract address');
+	}
+};
+
 export const validate = async (postId: string) => {
 	const queryText = `
         UPDATE posts
@@ -53,14 +70,25 @@ export const validate = async (postId: string) => {
 	}
 };
 
-export const getAllPosts = async () => {
+interface Post {
+	id: number;
+	ipfs_hash: string;
+	created_at: Date;
+	wallet_addr: string;
+	stake: string;
+	reward: string | null;
+	validated: boolean;
+}
+
+export const getAllPosts = async (): Promise<Post[]> => {
 	const queryText = `
-        SELECT * FROM posts
-    `;
+		  SELECT * FROM posts
+		ORDER BY created_at DESC
+	  `;
 
 	try {
 		const result = await query(queryText, []);
-		return result.rows;
+		return result.rows as Post[]; // Explicitly cast result.rows to Post[]
 	} catch (error) {
 		console.error('Error getting posts:', error);
 		throw new Error('Unable to get posts');
@@ -69,7 +97,7 @@ export const getAllPosts = async () => {
 
 export const getUserPosts = async (wallet_address: string) => {
 	const queryText = `
-        SELECT id, ipfs_hash, created_at, validated FROM posts
+        SELECT id, ipfs_hash, stake, created_at, validated FROM posts
 		WHERE wallet_addr = $1
 		ORDER BY created_at DESC
     `;

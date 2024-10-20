@@ -1,0 +1,33 @@
+$primary-font: 'Source Sans 3', sans-serif;
+
+$color-text-white: hsla(0, 0%, 93%, 1);
+$color-text-brand: hsla(199, 93%, 42%, 1);
+
+$background-dark: hsla(234, 100%, 4%, 1);
+$color-border-gray: hsla(0, 0%, 29%, 1);
+$color-metadata-gray: hsla(0, 0%, 46%, 1);
+$color-nav-gray: hsla(0, 0%, 47%, 1);
+
+$gradient-brand: linear-gradient(90deg, hsla(201, 100%, 48%, 1) 0%, hsla(267, 59%, 60%, 1) 100%);
+$gradient-brand-click: linear-gradient(90deg, hsla(201, 100%, 48%, 0.4) 0%, hsla(267, 59%, 60%, 0.4) 100%);
+
+$color-validation-green: hsla(127, 94%, 16%, 1);
+$color-invalidation-red: hsla(353, 89%, 18%, 1);
+$color-unverified-blue: hsla(233, 50%, 11%, 1);
+$color-downvote-highlight: hsla(353, 86%, 52%, 0.4);
+$color-upvote-highlight: hsla(134, 75%, 48%, 0.3);
+
+$color-yellow-highlight: hsla(46, 100%, 48%, 1);
+
+$color-information-red: hsla(0, 91%, 54%, 0.25);
+
+$fs-button: 1.125rem;
+$fs-title: 1.25rem;
+$fs-subtitle: 1rem;
+
+$border-r-sm: 0.625rem;
+$border-r: 1.875rem;
+
+$gap: 8px;
+$gap-sm: 0.3125rem;
+$gap-lg: 0.75rem;

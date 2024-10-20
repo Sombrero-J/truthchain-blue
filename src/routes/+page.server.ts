@@ -9,8 +9,9 @@ import {
 	removeUpvoteAndInsertDownvote
 } from '$lib/server/voteOperation';
 import { type Actions } from '@sveltejs/kit';
+import { getUser } from '$lib/server/usersOperation';
 
-export const load: PageServerLoad = async ({ url, cookies }) => {
+export const load: PageServerLoad = async ({ cookies }) => {
 	const rows = await getAllPosts();
 	const address = cookies.get('wallet_addr');
 
@@ -23,7 +24,8 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
 
 		const updatedRows = await Promise.all(
 			rows.map(async (row) => {
-				const { title, body, imageUrl, videoUrl } = await getPostContent(row.ipfs_hash);
+				const { title, description, imageUrl, videoUrl } = await getPostContent(row.ipfs_hash);
+				const { username, credibility } = await getUser(row.wallet_addr);
 
 				const voteData = allVotes.rows.find((vote) => vote.post_id === row.id) || {
 					upvote_count: 0,
@@ -42,12 +44,14 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
 				return {
 					...row,
 					title,
-					body,
+					description,
 					imageUrl,
 					videoUrl,
 					upvote_count: voteData.upvote_count,
 					downvote_count: voteData.downvote_count,
-					userVote: userVoteType
+					userVote: userVoteType,
+					credibility,
+					username,
 				};
 			})
 		);
@@ -76,8 +80,8 @@ export const actions: Actions = {
 	},
 	downvote: async ({ request }) => {
 		const data = await request.formData();
-		const postId = data.get('postId');
-		const address = data.get('address');
+		const postId = data.get('postId') as string;
+		const address = data.get('address') as string;
 		const vote_type = data.get('vote_type') as string;
 		console.log('vote_type: ', vote_type);
 		if (vote_type === 'true') {

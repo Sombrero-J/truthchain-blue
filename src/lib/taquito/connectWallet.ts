@@ -3,10 +3,11 @@ import { TezosToolkit } from '@taquito/taquito';
 import { BeaconWallet } from '@taquito/beacon-wallet';
 import { NetworkType, type AccountInfo, type DAppClientOptions } from '@airgap/beacon-sdk';
 import { walletStore, balanceStore, addressStore } from '$lib/stores/wallet';
+import { userStore } from '$lib/stores/user';
 
 const rpcUrl = 'https://ghostnet.ecadinfra.com';
 
-walletStore.subscribe(value => {
+walletStore.subscribe((value) => {
 	console.log('Wallet store updated:', value);
 });
 
@@ -30,8 +31,9 @@ const initializeWallet = (): BeaconWallet => {
 			enableMetrics: true
 		};
 		walletInstance = new BeaconWallet(options);
-		walletStore.set(walletInstance); // Store wallet in store
-		initializeTezosToolkit().setWalletProvider(walletInstance); // Set wallet provider
+		walletStore.set(walletInstance);
+		const Tezos = initializeTezosToolkit();
+		Tezos.setWalletProvider(walletInstance);
 	}
 	return walletInstance;
 };
@@ -42,7 +44,7 @@ export const connectWallet = async () => {
 		await wallet.requestPermissions();
 		const address = await wallet.getPKH();
 		addressStore.set(address);
-		if (address && !await checkUserEntry(address)) {
+		if (address && !(await checkUserEntry(address))) {
 			await insertUser(address);
 			addressStore.set(address);
 			await getWalletBalance(address);
@@ -73,14 +75,26 @@ const getWalletBalance = async (walletAddress: string) => {
 export const detectAccount = async (): Promise<AccountInfo | null> => {
 	const wallet = initializeWallet();
 	const activeAccount = await wallet.client.getActiveAccount();
-	console.log("account found," , activeAccount);
+	console.log('account found,', activeAccount);
 	if (activeAccount) {
 		addressStore.set(activeAccount.address);
 		await getWalletBalance(activeAccount.address);
-		if (!(await checkUserEntry(activeAccount.address))) {
+		const { exists, credibility, username } = await checkUserEntry(activeAccount.address);
+		if (!exists) {
 			await insertUser(activeAccount.address);
+			userStore.update((currentUser) => ({
+				...currentUser,
+				credibility: 5.0,
+				username: activeAccount.address
+				// USERNAME SET TO ADDRESS IF USER IS NEWLY CREATED
+			}));
 			return activeAccount;
 		} else {
+			userStore.update((currentUser) => ({
+				...currentUser,
+				credibility: credibility,
+				username: username
+			}));
 			return activeAccount;
 		}
 	} else {

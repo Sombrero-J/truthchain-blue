@@ -1,0 +1,76 @@
+Date : 2024-10-19 10:31:45
+Directory : /Users/jayden/Desktop/truthchain-app-v2/src
+Total : 33 files,  1584 codes, 40 comments, 239 blanks, all 1863 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| TypeScript |         17 |        768 |         27 |        112 |        907 |
+| Svelte     |         12 |        723 |          0 |        107 |        830 |
+| CSS        |          2 |         54 |         13 |         15 |         82 |
+| HTML       |          1 |         23 |          0 |          1 |         24 |
+| SCSS       |          1 |         16 |          0 |          4 |         20 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                      | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                         |         33 |      1,584 |         40 |        239 |      1,863 |
+| . (Files)                                                                                 |          3 |         33 |          7 |          5 |         45 |
+| lib                                                                                       |         18 |      1,115 |         19 |        154 |      1,288 |
+| lib/component                                                                             |          8 |        557 |          0 |         74 |        631 |
+| lib/server                                                                                |          5 |        362 |          9 |         49 |        420 |
+| lib/stores                                                                                |          2 |         24 |          3 |          4 |         31 |
+| lib/taquito                                                                               |          3 |        172 |          7 |         27 |        206 |
+| routes                                                                                    |          9 |        366 |          1 |         61 |        428 |
+| routes (Files)                                                                            |          3 |        153 |          0 |         26 |        179 |
+| routes/api                                                                                |          2 |         29 |          1 |          3 |         33 |
+| routes/api/database                                                                       |          2 |         29 |          1 |          3 |         33 |
+| routes/api/database/checkUserEntry                                                        |          1 |         15 |          0 |          1 |         16 |
+| routes/api/database/insertUser                                                            |          1 |         14 |          1 |          2 |         17 |
+| routes/create                                                                             |          2 |         95 |          0 |         17 |        112 |
+| routes/profile                                                                            |          2 |         89 |          0 |         15 |        104 |
+| styles                                                                                    |          3 |         70 |         13 |         19 |        102 |
++-------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                  | language   | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /Users/jayden/Desktop/truthchain-app-v2/src/app.d.ts                                      | TypeScript |          5 |          7 |          2 |         14 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/app.html                                      | HTML       |         23 |          0 |          1 |         24 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/hooks.server.ts                               | TypeScript |          5 |          0 |          2 |          7 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/component/button.svelte                   | Svelte     |         50 |          0 |         11 |         61 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/component/connectWallet.svelte            | Svelte     |         22 |          0 |          5 |         27 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/component/icon.svelte                     | Svelte     |        103 |          0 |          6 |        109 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/component/metadata.svelte                 | Svelte     |         58 |          0 |          9 |         67 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/component/post.svelte                     | Svelte     |        282 |          0 |         35 |        317 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/component/subtitle.svelte                 | Svelte     |         11 |          0 |          4 |         15 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/component/title.svelte                    | Svelte     |         31 |          0 |          3 |         34 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/component/vote.svelte                     | Svelte     |          0 |          0 |          1 |          1 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/server/heroku.ts                          | TypeScript |         15 |          1 |          6 |         22 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/server/pinata.ts                          | TypeScript |         76 |          0 |         11 |         87 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/server/postsOperation.ts                  | TypeScript |         72 |          0 |         13 |         85 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/server/usersOperation.ts                  | TypeScript |         82 |          8 |          9 |         99 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/server/voteOperation.ts                   | TypeScript |        117 |          0 |         10 |        127 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/stores/user.ts                            | TypeScript |         19 |          3 |          3 |         25 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/stores/wallet.ts                          | TypeScript |          5 |          0 |          1 |          6 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/taquito/connectWallet.ts                  | TypeScript |        127 |          1 |         14 |        142 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/taquito/signData.ts                       | TypeScript |         29 |          6 |          9 |         44 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/lib/taquito/test.ts                           | TypeScript |         16 |          0 |          4 |         20 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/routes/+layout.svelte                         | Svelte     |         40 |          0 |          9 |         49 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/routes/+page.server.ts                        | TypeScript |         81 |          0 |         11 |         92 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/routes/+page.svelte                           | Svelte     |         32 |          0 |          6 |         38 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/routes/api/database/checkUserEntry/+server.ts | TypeScript |         15 |          0 |          1 |         16 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/routes/api/database/insertUser/+server.ts     | TypeScript |         14 |          1 |          2 |         17 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/routes/create/+page.server.ts                 | TypeScript |         50 |          0 |          9 |         59 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/routes/create/+page.svelte                    | Svelte     |         45 |          0 |          8 |         53 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/routes/profile/+page.server.ts                | TypeScript |         40 |          0 |          5 |         45 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/routes/profile/+page.svelte                   | Svelte     |         49 |          0 |         10 |         59 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/styles/main.css                               | CSS        |          0 |          1 |          3 |          4 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/styles/main.scss                              | SCSS       |         16 |          0 |          4 |         20 |
+| /Users/jayden/Desktop/truthchain-app-v2/src/styles/reset.css                              | CSS        |         54 |         12 |         12 |         78 |
+| Total                                                                                     |            |      1,584 |         40 |        239 |      1,863 |
++-------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

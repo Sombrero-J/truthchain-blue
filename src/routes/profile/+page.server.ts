@@ -2,16 +2,74 @@ import { fail, type Actions } from '@sveltejs/kit';
 import { insertUsername } from '$lib/server/usersOperation';
 import type { PageServerLoad } from './$types';
 import { getUserPosts } from '$lib/server/postsOperation';
+import { getUserVotes, getVotes } from '$lib/server/voteOperation';
+import { getPostContent } from '$lib/server/pinata';
+import { getUser } from '$lib/server/usersOperation';
 
-export const load: PageServerLoad = async ({url}) => {
-	const address = url.searchParams.get('address');
-	if (!address) {
-		return fail(400, {
-			message: 'Something went wrong.'
-		});
+export const load: PageServerLoad = async ({ cookies }) => {
+	const address = cookies.get('wallet_addr');
+
+	if (address) {
+		const rows = await getUserPosts(address);
+		if (rows.length > 0) {
+			const allVotes = await getVotes();
+
+			let userVotes = null;
+			userVotes = await getUserVotes(address);
+
+			const updatedRows = await Promise.all(
+				rows.map(async (row) => {
+					console.log('row:', row);
+					const { title, description, imageUrl, videoUrl } = await getPostContent(row.ipfs_hash);
+					const { username, credibility } = await getUser(address);
+
+					const voteData = allVotes.rows.find((vote) => vote.post_id === row.id) || {
+						upvote_count: 0,
+						downvote_count: 0
+					};
+
+					let userVoteType = null;
+
+					if (userVotes) {
+						const userVote = userVotes.rows.find((vote) => vote.post_id === row.id);
+						if (userVote) {
+							userVoteType = userVote.vote_type;
+						}
+					}
+
+					if (!username) {
+						return {
+							...row,
+							title,
+							description,
+							imageUrl,
+							videoUrl,
+							upvote_count: voteData.upvote_count,
+							downvote_count: voteData.downvote_count,
+							userVote: userVoteType,
+							credibility,
+							username
+						};
+					}
+
+					return {
+						...row,
+						title,
+						description,
+						imageUrl,
+						videoUrl,
+						upvote_count: voteData.upvote_count,
+						downvote_count: voteData.downvote_count,
+						userVote: userVoteType,
+						credibility,
+						username
+					};
+				})
+			);
+			return { post: updatedRows };
+		}
 	}
-	const rows = await getUserPosts(address);
-	return { post: rows };
+	return { post: [] };
 };
 
 export const actions: Actions = {

@@ -2,18 +2,26 @@ import { client } from '$lib/server/heroku';
 
 export const insertUser = async (wallet_addr: string) => {
 	const res = await client.query(
-		'INSERT INTO users (wallet_address, credibility) VALUES ($1, 5.0) RETURNING *',
+		'INSERT INTO users (wallet_address, credibility, contract_addr) VALUES ($1, 50.0) RETURNING *',
 		[wallet_addr]
 	);
 	return res;
 };
 
+export const insertContractAddr = async (wallet_addr: string, contract_addr: string) => {
+	const res = await client.query(
+		'UPDATE users SET contract_addr = $1 WHERE wallet_address = $2 RETURNING *',
+		[contract_addr, wallet_addr]
+	);
+	return res;
+};
+
 export const insertUsername = async (username: string, wallet_addr: string) => {
-    const res = await client.query(
-        'UPDATE users SET username = $1 WHERE wallet_address = $2 RETURNING *',
-        [username, wallet_addr]
-    );
-    return res;
+	const res = await client.query(
+		'UPDATE users SET username = $1 WHERE wallet_address = $2 RETURNING *',
+		[username, wallet_addr]
+	);
+	return res;
 };
 
 export const insertStake = async (fixed_stake: string, wallet_addr: string) => {
@@ -63,18 +71,34 @@ export const getUser = async (wallet_addr: string) => {
 
 /**
  * Function to check if a user with the given wallet address exists in the users table
+ * and return their credibility if they exist
  * @param wallet_addr The wallet address to check
- * @returns {Promise<boolean>} true if the wallet address exists, false otherwise
+ * @returns {Promise<{ exists: boolean, credibility: number | null }>} An object with a boolean indicating if the user exists, and their credibility (or null if not found)
  */
-export const checkUserEntry = async (wallet_addr: string): Promise<boolean> => {
+export const checkUserEntry = async (
+	wallet_addr: string
+): Promise<{ exists: boolean; credibility: number | null; username: string | null }> => {
 	try {
-		// Query the users table to check if the wallet address exists
-		const res = await client.query('SELECT 1 FROM users WHERE wallet_address = $1 LIMIT 1', [
-			wallet_addr
-		]);
+		const res = await client.query(
+			'SELECT credibility, username FROM users WHERE wallet_address = $1 LIMIT 1',
+			[wallet_addr]
+		);
 
-		// If at least one row is found, the wallet address exists
-		return res.rows.length > 0;
+		// If a row is found, return the credibility and exists=true
+		if (res.rows.length > 0) {
+			return {
+				exists: true,
+				credibility: res.rows[0].credibility,
+				username: res.rows[0].username
+			};
+		} else {
+			// If no rows are found, return exists=false and credibility=null
+			return {
+				exists: false,
+				credibility: null,
+				username: null
+			};
+		}
 	} catch (error) {
 		console.error('Error checking user entry:', error);
 		throw new Error('Database query failed');

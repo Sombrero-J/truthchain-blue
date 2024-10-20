@@ -1,0 +1,13 @@
+"filename", "language", "Svelte", "SCSS", "CSS", "TypeScript", "comment", "blank", "total"
+"/Users/jayden/Desktop/truthchain-app-v2/src/lib/component/button.svelte", "Svelte", 0, 0, 0, 0, 0, 1, 1
+"/Users/jayden/Desktop/truthchain-app-v2/src/lib/component/icon.svelte", "Svelte", -101, 0, 0, 0, 0, 1, -100
+"/Users/jayden/Desktop/truthchain-app-v2/src/lib/component/metadata.svelte", "Svelte", 58, 0, 0, 0, 0, 9, 67
+"/Users/jayden/Desktop/truthchain-app-v2/src/lib/component/post.svelte", "Svelte", 282, 0, 0, 0, 0, 35, 317
+"/Users/jayden/Desktop/truthchain-app-v2/src/lib/component/vote.svelte", "Svelte", 0, 0, 0, 0, 0, 1, 1
+"/Users/jayden/Desktop/truthchain-app-v2/src/lib/server/usersOperation.ts", "TypeScript", 0, 0, 0, 15, 1, 0, 16
+"/Users/jayden/Desktop/truthchain-app-v2/src/lib/taquito/connectWallet.ts", "TypeScript", 0, 0, 0, 12, 1, 1, 14
+"/Users/jayden/Desktop/truthchain-app-v2/src/routes/+layout.svelte", "Svelte", 12, 0, 0, 0, 0, 3, 15
+"/Users/jayden/Desktop/truthchain-app-v2/src/routes/+page.svelte", "Svelte", -135, 0, 0, 0, 0, -2, -137
+"/Users/jayden/Desktop/truthchain-app-v2/src/styles/main.scss", "SCSS", 0, 7, 0, 0, 0, 2, 9
+"/Users/jayden/Desktop/truthchain-app-v2/src/styles/reset.css", "CSS", 0, 0, 1, 0, 0, 0, 1
+"Total", "-", 116, 7, 1, 27, 2, 51, 204
