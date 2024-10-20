@@ -58,6 +58,8 @@ export const disconnectWallet = () => {
 	const wallet = initializeWallet();
 	wallet.client.clearActiveAccount();
 	walletStore.set(null);
+	userStore.set({ walletAddress: null, username: null, fixedStake: null, credibility: null });
+	console.log('Wallet disconnected');
 };
 
 const getWalletBalance = async (walletAddress: string) => {

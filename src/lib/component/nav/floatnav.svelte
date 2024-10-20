@@ -3,6 +3,7 @@
 	import { userStore } from '$lib/stores/user';
 	import ConnectWallet from '$lib/component/basic/connectWallet.svelte';
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 
 	const goToCreate = () => goto('/create');
 	const goToHome = () => goto('/');
@@ -14,7 +15,7 @@
 	<Button text="Create" style="primary" onClick={goToCreate} />
 	{#if !$userStore.walletAddress}
 		<ConnectWallet />
-	{:else if $userStore.username}
+	{:else if $userStore.username !== '' && $userStore.username !== null}
 		<Button text={$userStore.username} style="secondary" onClick={goToProfile} />
 	{:else if $userStore.walletAddress}
 		<Button text={$userStore.walletAddress} style="secondary" onClick={goToProfile} />

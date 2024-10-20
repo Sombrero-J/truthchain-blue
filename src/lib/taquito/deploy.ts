@@ -19,6 +19,7 @@ export const deployPost = async (
 > => {
 	try {
 		const tezos = new TezosToolkit(RPC_URL);
+		// For MVP purposes, attached a Private Key from a test account
 		tezos.setSignerProvider(
 			new InMemorySigner(
 				'edskRo417bodJqeDwghUHZiAtPNS7WuH5xxRBqD85CN9xChjz964V8jSTyXihq2fdxkrd2qLd9HnAiKHoFV1E8Et1NvrhMHXCx'

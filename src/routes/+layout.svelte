@@ -57,7 +57,7 @@
 	}
 
 	.children {
-		height: 100%;
+		min-height: 100svh;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
