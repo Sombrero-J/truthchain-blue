@@ -9,7 +9,12 @@ $color-metadata-gray: hsla(0, 0%, 46%, 1);
 $color-nav-gray: hsla(0, 0%, 47%, 1);
 
 $gradient-brand: linear-gradient(90deg, hsla(201, 100%, 48%, 1) 0%, hsla(267, 59%, 60%, 1) 100%);
-$gradient-brand-click: linear-gradient(90deg, hsla(201, 100%, 48%, 0.4) 0%, hsla(267, 59%, 60%, 0.4) 100%);
+$gradient-disabled: linear-gradient(90deg, rgba(0, 162, 247, 0.5) 0%, rgba(147, 93, 213, 0.5) 100%);
+$gradient-brand-click: linear-gradient(
+	90deg,
+	hsla(201, 100%, 48%, 0.4) 0%,
+	hsla(267, 59%, 60%, 0.4) 100%
+);
 
 $color-validation-green: hsla(127, 94%, 16%, 1);
 $color-invalidation-red: hsla(353, 89%, 18%, 1);

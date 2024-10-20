@@ -99,12 +99,12 @@ export const actions: Actions = {
 					const { contract_address } = res;
 					await insertContractAddr(iRes.rows[0].id, contract_address);
 					console.log('Post successfully inserted:', iRes.rows[0].id);
-					redirect(303, '/');
 				}
 			}
 		} catch (error) {
-			console.log(error);
+			console.log('Error: ', error);
 			return fail(400, { error: true, message: 'Error creating post' });
 		}
+		redirect(303, '/');
 	}
 };

@@ -57,9 +57,17 @@
 		background:
 			linear-gradient($background-dark, $background-dark) padding-box,
 			linear-gradient(to right, darkblue, darkorchid) border-box;
+	}
 
-		// border-radius: $border-r;
-		// border: 1px solid transparent;
+	.btn.primary:disabled {
+		cursor: not-allowed;
+	}
+
+	.btn.primary:disabled p {
+		background: $gradient-disabled;
+		background-clip: text;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
 	}
 
 	.secondary p {
@@ -76,7 +84,7 @@
 		background-color: hsla(0, 0%, 93%, 0.3);
 	}
 
-	.secondary:active{
+	.secondary:active {
 		background-color: hsla(0, 0%, 93%, 0.5);
 	}
 </style>

@@ -19,7 +19,6 @@ export const load: PageServerLoad = async ({ cookies }) => {
 
 			const updatedRows = await Promise.all(
 				rows.map(async (row) => {
-					console.log('row:', row);
 					const { title, description, imageUrl, videoUrl } = await getPostContent(row.ipfs_hash);
 					const { username, credibility } = await getUser(address);
 

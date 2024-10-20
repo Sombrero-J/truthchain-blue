@@ -8,8 +8,7 @@
 	import Textinput from '$lib/component/form/textinput.svelte';
 	import Button from '$lib/component/basic/button.svelte';
 	import DummyPost from '$lib/component/posts/dummyPost.svelte';
-	import { onMount } from 'svelte'
-
+	import { goto } from '$app/navigation';
 
 	export let form: ActionData;
 
@@ -42,6 +41,17 @@
 		videoUrl: '',
 		stake: stakeS
 	};
+
+	let uploading = false;
+	const upload = () => {
+		uploading = true;
+		return ({ result }) => {
+			uploading = false;
+			if (result.type === 'redirect') {
+				goto(result.location);
+			}
+		};
+	};
 </script>
 
 {#if form?.error}
@@ -54,7 +64,7 @@
 	<main>
 		<SectionHeading text="Create a post" />
 		<Information />
-		<form method="POST" action="?/create" enctype="multipart/form-data" use:enhance>
+		<form method="POST" action="?/create" enctype="multipart/form-data" use:enhance={upload}>
 			<Textinput
 				label="Title"
 				name="title"
@@ -97,7 +107,7 @@
 			<p class="dummy">Preview</p>
 			<DummyPost {data} />
 			<div class="button">
-				<Button type="submit" text="Publish" style="primary" />
+				<Button type="submit" text="Publish" style="primary" disabled={uploading} />
 			</div>
 		</form>
 	</main>

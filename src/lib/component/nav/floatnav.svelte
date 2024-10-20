@@ -3,7 +3,6 @@
 	import { userStore } from '$lib/stores/user';
 	import ConnectWallet from '$lib/component/basic/connectWallet.svelte';
 	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
 
 	const goToCreate = () => goto('/create');
 	const goToHome = () => goto('/');
@@ -36,5 +35,7 @@
 
 		background-color: hsla(234, 100%, 4%, 1);
 		box-shadow: 0px 0px 5px 0px $color-nav-gray;
+
+		z-index: 1000;
 	}
 </style>

@@ -2,7 +2,7 @@ import { client } from '$lib/server/heroku';
 
 export const insertUser = async (wallet_addr: string) => {
 	const res = await client.query(
-		'INSERT INTO users (wallet_address, credibility, contract_addr) VALUES ($1, 50.0) RETURNING *',
+		'INSERT INTO users (wallet_address, credibility) VALUES ($1, 50.0) RETURNING *',
 		[wallet_addr]
 	);
 	return res;
