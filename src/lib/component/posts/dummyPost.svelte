@@ -52,40 +52,16 @@
 	footer {
 		width: 100%;
 	}
-	.highlight.yellow {
-		color: $color-yellow-highlight;
-	}
-
-	.countdown {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: 0;
-
-		font-size: 0.75rem;
-	}
-	.validated {
-		background-color: $color-validation-green;
-	}
-
-	.invalidated {
-		background-color: $color-invalidation-red;
-	}
-
-	.unverified {
-		background-color: $color-unverified-blue;
-	}
 
 	.thumbnail-image {
-		max-height: 20rem; /* Set the maximum height */
-		overflow: hidden; /* Hide anything that overflows the container */
-		// display: block; /* Ensure it's treated as a block element */
+		max-height: 20rem; 
+		overflow: hidden;
 	}
 
 	.thumbnail-image img {
-		width: 100%; /* Stretch the image to fill the width of the container */
-		height: 100%; /* Let the image height fit the container's height */
-		object-fit: cover; /* Crop the image to fit within the container */
+		width: 100%; 
+		height: 100%; 
+		object-fit: cover; 
 	}
 	.padding {
 		padding: 0 1rem;
@@ -103,75 +79,6 @@
 
 		padding-bottom: 1rem;
 		border-bottom: 1px solid$color-border-gray;
-	}
-
-	.vote-pair {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		gap: 0.3rem;
-
-		border: none;
-		background-color: transparent;
-		padding: 0;
-
-		cursor: pointer;
-	}
-
-	.vote-bar {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-
-		width: 100%;
-	}
-
-	.vote-group {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: 0.5rem;
-	}
-
-	.hover-light.upvote {
-		background-color: transparent;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 1px;
-		border-radius: 50%;
-	}
-
-	.hover-light.downvote {
-		background-color: transparent;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 1px;
-		border-radius: 50%;
-	}
-
-	.hover-light.upvote:hover {
-		background-color: $color-upvote-highlight;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		// height: 28px;
-		// width: 28px;
-		padding: 1px;
-		border-radius: 50%;
-	}
-	.hover-light.downvote:hover {
-		background-color: $color-downvote-highlight;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		// height: 28px;
-		// width: 28px;
-		padding: 1px;
-
-		border-radius: 50%;
 	}
 
 	.content-header {

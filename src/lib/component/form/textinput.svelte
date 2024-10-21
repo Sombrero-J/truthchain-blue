@@ -5,7 +5,7 @@
 	export let support: string = '';
 	export let placeholder: string = 'Default placeholder';
 	export let required = false;
-	export let type: 'text' | 'textfield' | 'multimedia' = 'text';
+	export let type: 'text' | 'textfield' | 'multimedia' | 'number' = 'text';
 	export let firstUrl: string = '';
 
 	import Icon from '$lib/component/basic/icon.svelte';
@@ -55,8 +55,19 @@
 		<textarea {name} id="ref" bind:value {placeholder} {required}></textarea>
 	{:else if type === 'text'}
 		<input type="text" {name} id="ref" bind:value {placeholder} {required} />
+	{:else if type === 'number'}
+		<input
+			type="number"
+			{name}
+			id="ref"
+			bind:value
+			{placeholder}
+			{required}
+			min="200"
+			max="9999999999"
+		/>
 	{:else if type === 'multimedia'}
-	{imageUrl}
+		{imageUrl}
 		<div class="multimedia-container">
 			<div class="mm-item">
 				<div class="mm-caption">
@@ -78,7 +89,15 @@
 					<Icon name="video" width="58px" height="42px" viewBoxValues={[0, 0, 58, 42]} />
 					<p class="gradient">Video</p>
 				</div>
-				<input class="mm-upload" type="file" name="video-source" accept="video/*" multiple/>
+
+				<input
+					class="mm-upload"
+					type="file"
+					name="video-source"
+					accept="video/*"
+					on:change={handleFileChange}
+					multiple
+				/>
 			</div>
 
 			<button type="button" class="mm-item" on:click={() => (insertUrl = !insertUrl)}>
@@ -120,6 +139,17 @@
 </div>
 
 <style lang="scss">
+	/* Chrome, Safari, Edge, Opera */
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	/* Firefox */
+	input[type='number'] {
+		-moz-appearance: textfield;
+	}
 	.url-input-container {
 		display: flex;
 		flex-direction: column;

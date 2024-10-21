@@ -99,6 +99,7 @@
 			<Textinput
 				label="Stake"
 				name="stake"
+				type="number"
 				bind:value={stakeS}
 				support={`Specify the amount of stake for this post. It will be transferred from this (${address}) wallet`}
 				required={true}

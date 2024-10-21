@@ -7,7 +7,7 @@
 	import Icon from '../basic/icon.svelte';
 	import BigNumber from 'bignumber.js';
 
-	let trimmedStake: string | null = null;
+	let trimmedStake: string = "0";
 
 	const formattedDate = new Date(date);
 
@@ -25,6 +25,8 @@
 			trimmedStake = parseFloat(
 				stake.toString().replace(/(\.\d*[1-9])0+$|\.0*$/, '$1')
 			).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 20 });
+		} else {
+			trimmedStake = "0";
 		}
 	}
 </script>
