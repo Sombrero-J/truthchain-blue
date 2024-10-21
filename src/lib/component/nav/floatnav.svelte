@@ -17,8 +17,10 @@
 		<ConnectWallet />
 	{:else if $userStore.username !== '' && $userStore.username !== null}
 		<Button text={$userStore.username} style="secondary" onClick={goToProfile} />
+		<ConnectWallet />
 	{:else if $userStore.walletAddress}
 		<Button text={$userStore.walletAddress} style="secondary" onClick={goToProfile} />
+		<ConnectWallet />
 	{/if}
 </nav>
 

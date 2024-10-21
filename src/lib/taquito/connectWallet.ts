@@ -7,10 +7,6 @@ import { userStore } from '$lib/stores/user';
 
 const rpcUrl = 'https://ghostnet.ecadinfra.com';
 
-walletStore.subscribe((value) => {
-	console.log('Wallet store updated:', value);
-});
-
 let tezosInstance: TezosToolkit | null = null;
 let walletInstance: BeaconWallet | null = null;
 
@@ -44,9 +40,23 @@ export const connectWallet = async () => {
 		await wallet.requestPermissions();
 		const address = await wallet.getPKH();
 		addressStore.set(address);
-		if (address && !(await checkUserEntry(address))) {
+
+		const { exists, credibility, username } = await checkUserEntry(address);
+		if (!exists) {
 			await insertUser(address);
-			addressStore.set(address);
+			userStore.update((currentUser) => ({
+				...currentUser,
+				credibility: 50.0,
+				username: address
+				// USERNAME SET TO ADDRESS IF USER IS NEWLY CREATED
+			}));
+			await getWalletBalance(address);
+		} else {
+			userStore.update((currentUser) => ({
+				...currentUser,
+				credibility: credibility,
+				username: username
+			}));
 			await getWalletBalance(address);
 		}
 	} catch (error) {
@@ -58,6 +68,7 @@ export const disconnectWallet = () => {
 	const wallet = initializeWallet();
 	wallet.client.clearActiveAccount();
 	walletStore.set(null);
+	addressStore.set('');
 	userStore.set({ walletAddress: null, username: null, fixedStake: null, credibility: null });
 	console.log('Wallet disconnected');
 };
@@ -77,7 +88,7 @@ const getWalletBalance = async (walletAddress: string) => {
 export const detectAccount = async (): Promise<AccountInfo | null> => {
 	const wallet = initializeWallet();
 	const activeAccount = await wallet.client.getActiveAccount();
-	console.log('account found,', activeAccount);
+	console.log('account found: ', activeAccount);
 	if (activeAccount) {
 		addressStore.set(activeAccount.address);
 		await getWalletBalance(activeAccount.address);
